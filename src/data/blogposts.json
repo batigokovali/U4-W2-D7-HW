@@ -16,7 +16,7 @@
         "id": "dd82z15l0lepufh2d",
         "createdAt": "2023-03-01T15:39:23.557Z",
         "updatedAt": "2023-03-02T15:27:24.425Z",
-        "coverURL": "localhost:3301/img/blogposts/dd82z15l0lepufh2d.jpeg",
+        "coverURL": "https://res.cloudinary.com/dkcuhltxb/image/upload/v1678110722/cld-sample-2.jpg",
         "comments": [
             {
                 "bati as": "angora cat sevdalısı",
@@ -43,7 +43,7 @@
         "id": "dd82z1ii0ler9unuk",
         "createdAt": "2023-03-02T15:38:52.603Z",
         "updatedAt": "2023-03-02T15:45:27.970Z",
-        "coverURL": "localhost:3301/img/blogposts/dd82z1ii0ler9unuk.gif",
+        "coverURL": "https://res.cloudinary.com/dkcuhltxb/image/upload/v1678110724/cld-sample-5.jpg",
         "comments": []
     }
 ]

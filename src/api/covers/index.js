@@ -4,6 +4,11 @@ import { extname } from "path"
 import { saveBlogpostCovers, getBlogposts, writeBlogposts } from "../../lib/fs-tools.js"
 import { v2 as cloudinary } from "cloudinary"
 import { CloudinaryStorage } from "multer-storage-cloudinary"
+import { pipeline } from "stream"
+import { getBlogpostsJSONReadableStream } from "../../lib/fs-tools.js"
+import { getBlogpostPDFReadableStream } from "../../lib/pdf-tools.js"
+import createHttpError from "http-errors"
+
 
 const blogpostCoversRouter = Express.Router()
 
@@ -30,6 +35,24 @@ blogpostCoversRouter.post("/:blogpostID/uploadCover/single", cloudinaryUploader,
         next(error)
     }
 
+})
+
+blogpostCoversRouter.get("/:blogpostID/pdf", async (req, res, next) => {
+
+    const blogposts = await getBlogposts()
+    const blogpostWithID = blogposts.find(blogpost => blogpost.id === req.params.blogpostID)
+    if (blogpostWithID) {
+        res.setHeader("Content-Disposition", `attachment; filename=${req.params.blogpostID}.pdf`)
+        const source = getBlogpostPDFReadableStream(blogpostWithID)
+        const destination = res
+        pipeline(source, destination, err => {
+            if (err) {
+                next(err)
+            }
+        })
+    } else {
+        next(createHttpError(404, `Blogpost with id ${req.params.blogpostID} not found!`))
+    }
 })
 
 export default blogpostCoversRouter
