@@ -1,6 +1,7 @@
 import PdfPrinter from "pdfmake";
+import imageToBase64 from "image-to-base64";
 
-export const getBlogpostPDFReadableStream = blogpost => {
+export const getBlogpostPDFReadableStream = async blogpost => {
     // Define font files
     const fonts = {
         Courier: {
@@ -19,7 +20,13 @@ export const getBlogpostPDFReadableStream = blogpost => {
 
     const printer = new PdfPrinter(fonts)
 
-    const content = [blogpost.title, blogpost.content, blogpost.id]
+    const coverBase64 = await imageToBase64(blogpost.coverURL);
+
+    const content = [blogpost.title, blogpost.content, blogpost.id, {
+        image: `data:image/jpeg;base64,${coverBase64}`,
+        width: 150,
+        height: 150
+    }]
 
     const docDefinition = {
         content: [...content],

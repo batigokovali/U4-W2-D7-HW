@@ -43,7 +43,7 @@ blogpostCoversRouter.get("/:blogpostID/pdf", async (req, res, next) => {
     const blogpostWithID = blogposts.find(blogpost => blogpost.id === req.params.blogpostID)
     if (blogpostWithID) {
         res.setHeader("Content-Disposition", `attachment; filename=${req.params.blogpostID}.pdf`)
-        const source = getBlogpostPDFReadableStream(blogpostWithID)
+        const source = await getBlogpostPDFReadableStream(blogpostWithID)
         const destination = res
         pipeline(source, destination, err => {
             if (err) {
